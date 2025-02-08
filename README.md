@@ -1,76 +1,112 @@
-## :warning: Please read these instructions carefully and entirely first
-* Clone this repository to your local machine.
-* Use your IDE of choice to complete the assignment.
-* Use Javascript or preferably Typescript to complete the assignment, other languages will not be considered unfortunately.
-* When you have completed the assignment, you need to  push your code to a public repository and send the link via email.
-* Once you reply back to the email, your assignment will be considered completed. Please make sure that you have completed the assignment and pushed all code from your local machine to the repository before you reply.
-* There is no time limit for this task - however, for guidance, it is expected to typically take around 3-4 hours.
+# Shopping Cart Assignment
 
-# Begin the task
+## Project Overview
 
-Write some code that provides the following basic shopping cart capabilities:
+This is a **TypeScript-based shopping cart module** that integrates with a **mock price API**. It supports:
 
-1. Add a product to the cart
-   1. Specifying the product name and quantity
-   2. Retrieve the product price by issuing a request to the the [Price API](#price-api) specified below
-   3. Cart state (totals, etc.) must be available
+- **Adding products**
+- **Fetching prices dynamically**
+- **Calculating totals (subtotal, tax, total)**
+- **Unit tests to ensure correctness**
 
-2. Calculate the state:
-   1. Cart subtotal (sum of price for all items)
-   2. Tax payable (charged at 12.5% on the subtotal)
-   3. Total payable (subtotal + tax)
-   4. Totals should be rounded up where required
+---
 
-## Price API
+## 1️⃣ Setup Instructions
 
-The price API is an HTTP service that returns the price details for a product, identified by it's name. The shopping cart should integrate with the price API to retrieve product prices. 
+### 1. Clone the Repository
 
-### Price API Service Details
+```sh
+git clone <your-forked-repo-url>
+cd shopping-cart-assignment
+```
 
-Start the price API by running the following command: `npm run serve-products`
+### 2. Install Dependencies
 
-Base URL: `http://localhost:3001/`
+```sh
+npm install
+```
 
-View Product: `GET /products/{product}`
+### 3. Start the Mock Price API
 
-List of available products
-* `cheerios`
-* `cornflakes`
-* `frosties`
-* `shreddies`
-* `weetabix`
+```sh
+npm run serve-products
+```
 
-## Example
-The below is a sample with the correct values you can use to confirm your calculations
+This will start `json-server` at `http://localhost:3001/products`.
 
-### Inputs
-* Add 1 × cornflakes @ 2.52 each
-* Add another 1 x cornflakes @2.52 each
-* Add 1 × weetabix @ 9.98 each
-  
-### Results  
-* Cart contains 2 x cornflakes
-* Cart contains 1 x weetabix
-* Subtotal = 15.02
-* Tax = 1.88
-* Total = 16.90
+---
 
-## Tips on what we’re looking for
+## 2️⃣ Running the Shopping Cart
 
-* We value simplicity as an architectural virtue and as a development practice. Solutions should reflect the difficulty of the assigned task, and shouldn’t be overly complex.
-* We prefer simple, well tested solutions over clever solutions.
-* We will appreciate descriptive and unambiguous names for the concepts you introduce.
-* Atomic commits with descriptive messages will get you extra brownie points.
+To execute the shopping cart logic:
 
-### DO
+```sh
+npx ts-node src/index.ts
+```
 
-* ✅ Include unit tests.
-* ✅ Test both any client and logic.
-* ✅ Update the README.md with any relevant information, assumptions, and/or tradeoffs you would like to highlight.
-* ✅ Add some information on how the reviewer might test your solution.
+✅ **Expected Output Example**
 
-### DO NOT
+```json
+{
+  "items": [
+    { "id": "cornflakes", "name": "Cornflakes", "quantity": 2, "price": 4.99 },
+    { "id": "weetabix", "name": "Weetabix", "quantity": 1, "price": 7.29 }
+  ],
+  "subtotal": 17.27,
+  "tax": 2.16,
+  "total": 19.43
+}
+```
 
-* ❌ Submit any form of app, such as web APIs, browser, desktop, or command-line applications.
-* ❌ Add unnecessary layers of abstraction.
-* ❌ Add unnecessary patterns/ architectural features that aren’t called for e.g. persistent storage.
+---
+
+## 3️⃣ Running Unit Tests
+
+To run unit tests:
+
+```sh
+npx jest
+```
+
+✅ **What Gets Tested?**
+
+- `cart.ts` → Adding products & price calculations
+- `priceFetcher.ts` → API integration
+
+---
+
+## 4️⃣ Resetting `db.json` After Running
+
+This project \*\*automatically resets \*\***`db.json`** after each run. No need to manually restore it! 🚀
+
+---
+
+## 5️⃣ Folder Structure
+
+```
+shopping-cart-assignment
+│── src/
+│   ├── cart.ts         # Shopping cart logic
+│   ├── priceFetcher.ts # Fetches product prices
+│   ├── index.ts        # Runs cart logic
+│── tests/              # Unit tests
+│   ├── cart.test.ts
+│   ├── priceFetcher.test.ts
+│── db.json             # Mock API data
+│── package.json        # Project metadata
+│── jest.config.js      # Jest configuration
+│── README.md           # This file
+```
+
+---
+
+## Final Notes
+
+- **Your ********************`db.json`******************** will reset after each app run.**
+- **Make sure ********************`serve-products`******************** is running before executing the cart logic.**
+- **Check expected API responses before running the cart.**
+
+🚀 **Your shopping cart is ready to go!** 🚀
+
+
+
